@@ -3,8 +3,11 @@ const menuMobileIcon = document.querySelector('.menu');
 const shoppingCart = document.querySelector('.navbar-shopping-cart');
 const menuDesktop = document.querySelector('.desktop-menu');
 const menuMobile = document.querySelector('.mobile-menu');
-const shoppingCartDetails = document.querySelector('.product-detail');
+const shoppingCartDetails = document.querySelector('#product-cart-ctn');
 const cardCtn = document.querySelector('.cards-container')
+const productDetails = document.querySelector('#product-detail');
+const productDetailsClose = document.querySelector('.product-detail-close');
+
 function desactive(element) {
     let isElementClose = element.classList.contains('inactive')
     if (isElementClose === false) {
@@ -12,17 +15,20 @@ function desactive(element) {
     }
 }
 email.addEventListener('click',()=>{
+    desactive(productDetails)
     desactive(shoppingCartDetails)
     menuDesktop.classList.toggle('inactive')
 
 })
 menuMobileIcon.addEventListener('click',()=>{
+    desactive(productDetails)
     desactive(shoppingCartDetails)
     menuMobile.classList.toggle('inactive')
 })
 shoppingCart.addEventListener('click',()=>{
     desactive(menuDesktop)
     desactive(menuMobile)
+    desactive(productDetails)
     shoppingCartDetails.classList.toggle('inactive')
 })
 
@@ -75,7 +81,6 @@ for (const iterator of products) {
     const price = document.createElement('p');
     const name = document.createElement('p');
     const iconCtn = document.createElement('figure');
-    console.log(iconCtn);
     const icon = document.createElement('img');   
     productCard.classList.add('product-card');
     img.setAttribute('src',iterator.url);
@@ -88,4 +93,15 @@ for (const iterator of products) {
     productInfoLeft.append(price,name);
     iconCtn.appendChild(icon);
     icon.setAttribute('src','./icons/bt_add_to_cart.svg');
+    img.addEventListener('click',()=>{
+        desactive(shoppingCartDetails)
+        desactive(menuDesktop)
+        desactive(menuMobile)
+        productDetails.classList.toggle('inactive')
+
+})
+    productDetailsClose.addEventListener('click',()=>{
+        productDetails.classList.add('inactive')
+    })
 }
+
